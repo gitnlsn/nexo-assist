@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: nexo-assist-postgres
+    environment:
+      POSTGRES_USER: nexo
+      POSTGRES_PASSWORD: nexo
+      POSTGRES_DB: nexo_assist
+    ports:
+      - "5433:5432"
+    volumes:
+      - nexo-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexo -d nexo_assist"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  nexo-pgdata:

@@ -68,6 +68,8 @@ export interface TraceStep {
   tool: string;
   /** Short human label shown above the reply, e.g. "consultou seus chamados". */
   label: string;
+  /** Bookkeeping steps (e.g. recordDecision) are hidden from the compact step line but kept in the detail view. */
+  hidden?: boolean;
   status: "running" | "ok" | "error";
   /** One-line, human readable summary of input and result. */
   input?: string;

@@ -2,7 +2,7 @@ import { RequestContext } from "@mastra/core/request-context";
 import { createTicketsClient } from "@/clients/tickets";
 import { type AgentRequestContext, type HandoffReason, type RecordedDecision, type TurnServices } from "@/agent/context";
 import { agentModel, nexoAssist } from "@/agent/agent";
-import { stepLabel, summarizeArgs } from "@/agent/labels";
+import { HIDDEN_FROM_STEP_LINE, stepLabel, summarizeArgs } from "@/agent/labels";
 import type { ChatMessage, ConversationView, DecisionTrace, MessagePart, StreamEvent, TraceStep } from "@/shared/chat";
 import type { User } from "@/shared/domain";
 import { addMessage, applyEvent, createDraft, getConversation, getDraftStatuses, listMessages, markNeedsAttention } from "./conversations";
@@ -139,6 +139,7 @@ export async function runAgentTurn({ user, conversation, emit, abortSignal }: Ru
             id: chunk.payload.toolCallId,
             tool: chunk.payload.toolName,
             label: stepLabel(chunk.payload.toolName, args),
+            hidden: HIDDEN_FROM_STEP_LINE.has(chunk.payload.toolName) || undefined,
             status: "running",
             input: summarizeArgs(chunk.payload.toolName, args),
           };

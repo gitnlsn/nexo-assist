@@ -173,7 +173,7 @@ async function main() {
     }
   }
 
-  const summary = `${passed}/${scenarios.length} cenários passaram · ${tokens} tokens no total · modelo ${process.env.AGENT_MODEL || "google/gemini-2.5-flash"}`;
+  const summary = `${passed}/${scenarios.length} cenários passaram · ${tokens} tokens no total · modelo ${process.env.AGENT_MODEL || "google/gemini-3.5-flash-lite"}`;
   console.log(`\n${summary}`);
   mkdirSync("evals", { recursive: true });
   writeFileSync(

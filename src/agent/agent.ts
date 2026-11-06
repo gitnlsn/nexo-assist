@@ -3,7 +3,7 @@ import { type AgentRequestContext, getTurn } from "./context";
 import { buildInstructions } from "./instructions";
 import { agentTools } from "./tools";
 
-export const DEFAULT_MODEL = "google/gemini-2.5-flash";
+export const DEFAULT_MODEL = "google/gemini-3.5-flash-lite";
 
 export function agentModel(): string {
   return process.env.AGENT_MODEL || DEFAULT_MODEL;

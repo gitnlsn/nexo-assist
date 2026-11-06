@@ -3,6 +3,7 @@
  *
  *   pnpm db:seed && pnpm eval            (the dev server must be running: the agent calls the ticket service over HTTP)
  *   pnpm eval vpn-win10 privacidade      (run only some scenarios)
+ *   EVAL_DELAY_MS=20000 pnpm eval        (pause between scenarios, for free-tier rate limits)
  *
  * Each scenario is a short conversation; checks look at the DecisionTrace (tools used, action, confidence),
  * the UI parts produced (draft, handoff...) and the conversation state. Results go to evals/last-run.md.
@@ -148,7 +149,10 @@ async function main() {
   let passed = 0;
   let tokens = 0;
 
-  for (const s of scenarios) {
+  // Free-tier models have low requests-per-minute limits: EVAL_DELAY_MS spaces the scenarios out.
+  const delayMs = Number(process.env.EVAL_DELAY_MS ?? 0);
+  for (const [i, s] of scenarios.entries()) {
+    if (i > 0 && delayMs > 0) await new Promise((r) => setTimeout(r, delayMs));
     const started = Date.now();
     process.stdout.write(`• ${s.id.padEnd(16)} `);
     try {
@@ -169,7 +173,7 @@ async function main() {
     }
   }
 
-  const summary = `${passed}/${scenarios.length} cenários passaram · ${tokens} tokens no total · modelo ${process.env.AGENT_MODEL || "anthropic/claude-haiku-5-5"}`;
+  const summary = `${passed}/${scenarios.length} cenários passaram · ${tokens} tokens no total · modelo ${process.env.AGENT_MODEL || "google/gemini-2.5-flash"}`;
   console.log(`\n${summary}`);
   mkdirSync("evals", { recursive: true });
   writeFileSync(

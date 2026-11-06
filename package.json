@@ -18,7 +18,6 @@
     "setup": "pnpm db:up && pnpm db:migrate && pnpm db:seed"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^4.0.97",
     "@ai-sdk/react": "^4.0.167",
     "@mastra/core": "^1.82.0",
     "ai": "^7.0.163",

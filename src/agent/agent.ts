@@ -3,7 +3,7 @@ import { type AgentRequestContext, getTurn } from "./context";
 import { buildInstructions } from "./instructions";
 import { agentTools } from "./tools";
 
-export const DEFAULT_MODEL = "anthropic/claude-haiku-5-5";
+export const DEFAULT_MODEL = "google/gemini-2.5-flash";
 
 export function agentModel(): string {
   return process.env.AGENT_MODEL || DEFAULT_MODEL;

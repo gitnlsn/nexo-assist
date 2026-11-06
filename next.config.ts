@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // Mastra and the Postgres driver are server-only Node packages: keep them out of the bundler.
+  serverExternalPackages: ["@mastra/core", "postgres"],
   turbopack: {
     rules: {
       "*.css": {
